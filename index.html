@@ -4,15 +4,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <script language="javascript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="./bower_components/web3/dist/web3.js"></script>
-    <script src="./abi.js"></script>
     <link rel="stylesheet" type="text/css" href="lib/Nifty/css/component.css" />
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
+    <div class="loading-bar">
+
+    </div>
     <div class="md-modal md-effect-1" id="modal-1">
         <div class="md-content">
             <h3>写下誓言</h3>
@@ -33,6 +33,8 @@
 
                 <div class="swear-btn md-trigger" data-modal="modal-1">起个誓</div>
         </div>
+
+        <img class="user-avatar avatar"  alt="">
     </header>
 
 
@@ -40,32 +42,26 @@
 
         <div class="item">
              <div class="item-author">
-                author：<span>n1erfse435hj6887fgh23h489sdsg</span>
+               <img src="#" class="avatar"/> author：<span>n1erfse435hj6887fgh23h489sdsg</span>
              </div>
              <div class="item-content">
                     Moa Modal是一个jquery插件,提供了9种弹出层效果兼容性还可以支持ie6以上版本浏览器.... 自定义模态窗口样式,没有预定义的样式表!. 感谢网友Hero提供的方法 用法 .
              </div>
         </div>
-        <div class="item">
-                <div class="item-author">
-                   author：<span>n1erfse435hj6887fgh23h489sdsg</span>
-                </div>
-                <div class="item-content">
-                       Tencent Music is seeking as much as $1.2 billion from investors in its New York listing, which would make it the third largest Chinese IPO in the United States this year
-                </div>
-           </div>
-           <div class="item">
-                <div class="item-author">
-                   author：<span>n1erfse435hj6887fgh23h489sdsg</span>
-                </div>
-                <div class="item-content">
-                       Tencent Music is seeking as much as $1.2 billion from investors in its New York listing, which would make it the third largest Chinese IPO in the United States this year
-                </div>
-           </div>
+ 
+    </div>
+    <div class="pick-page">
+            <a href="#" class="last-page">上一页</a>
+            <a href="#" class="next-page">下一页</a>
     </div>
 
 
 </body>
+<script language="javascript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="./bower_components/web3/dist/web3.js"></script>
+<script src="contract/smallOathAbi.js"></script>
+<script src="https://www.xarg.org/download/pnglib.js"></script>
+<script src="lib/identicon/identicon.js"></script>
 <script src="index.js"></script>
 <script src="lib/Nifty/js/classie.js"></script>
 <script src="lib/Nifty/js/modalEffects.js"></script>

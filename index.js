@@ -1,5 +1,6 @@
 var oathContract;
 var userAccount;
+var page = 1;
 
 
 
@@ -7,46 +8,104 @@ $(".md-close").click(function () {
     var ac = $("#articleContent").val();
     console.log(ac)
     if (ac) {
-        saveData(ac)
+        writeArticle(ac)
+        $("#articleContent").val("");
     }
 
 })
 
+$(".next-page").click(function(){
+    page++;
+    showArticles(page)
+})
+$(".last-page").click(function(){
+    page--;
+    showArticles(page)
+})
+
 function startApp() {
-    var contractAddress = "0xe72dd631b0a9202c59f9cdb9233777d702a1c01b";
+    var contractAddress = "0x99D28A468bA3fB210358Fa1D1e7AB8293dD65508";
     oathContract = web3.eth.contract(ABI).at(contractAddress);
 
     console.log('oathContract', oathContract)
+    userAccount = web3.eth.accounts[0];
     var accountInterval = setInterval(function () {
         // Check if account has changed
         if (web3.eth.accounts[0] !== userAccount) {
             userAccount = web3.eth.accounts[0];
-
-            console.log(userAccount)
-
-            showArticles()
         }
     }, 100);
+    showArticles(page)
 
-    // Start here
+    var imgData = new Identicon(userAccount, 30).toString();
+    var imgurl = 'data:image/png;base64,' + imgData;
+    $(".user-avatar").attr({src:imgurl})
 }
 
-function showArticles() {
-    var r = oathContract.getData(function (err, result) {
-        console.log(result.toString())
+/*根据数据返回页面html结构*/
+function articleFactory(article){
+    console.log(article)
+    let item = `<div class="item">
+                    <div class="item-author">
+                    <img src="${article.imgurl}" class="avatar"/>
+                    author：<span>${article.author}</span>
+                    </div>
+                    <div class="item-content">
+                    ${article.content}
+                    </div>
+                </div>`
+    return item;
+}
+//字符串转对象数组
+function string2objarr(str){
+    console.log(str)
+    let arr = str.split(",");
+    let articles = [];
+ 
+    for(let i = 0;i < arr.length;){
+       
+        let art = {};
+        art.author = arr[i];
+        art.content = arr[i+1];
+        var imgData = new Identicon(art.author, 30).toString();
+        art.imgurl = 'data:image/png;base64,' + imgData;
+        articles.push(art);
+        i+=2;
+
+    }
+    return articles;
+}
+
+/**显示文章 */
+function showArticles(page) {
+    oathContract.showSomeArticles(page,function (err, result) {
         if (err) {
             console.log('数据请求错误...', err)
         } else {
-            console.log(result)
+            if(result){
+                let articles = string2objarr(result.toString());
+                console.log('---->',articles)
+                let articlesHtml = [];
+                for(let i = 0;i<articles.length;i++){
+                    articlesHtml.push(articleFactory(articles[i]))
+                }
+                console.log(articlesHtml)
+
+                //把最后的结果显示在页面
+                $(".main").html(articlesHtml.join(""))
+
+            }
+
         }
     })
 
 }
 
+/*写入文章*/
 function writeArticle(content) {
 
     console.log('正在保存数据，请稍等。。。。')
-    oathContract.setData(num, function (err, res) {
+    oathContract.writeArticleIntoChain(content, function (err, res) {
         if (err) {
             console.log('数据请求错误...', err)
         } else {
@@ -54,12 +113,29 @@ function writeArticle(content) {
             events.watch(function (error, result) {
                 if (!err)
                     console.log(result)
-                showArticles()
+                showArticles(1)
+                $(".loading-bar").css("width","0%")
             });
-
+            loading();
         }
 
     })
+}
+
+function loading(){
+    console.log('loading...')
+    let t = 0;
+    let w = 0;
+    let timer = setInterval(function(){
+        t++;
+
+        $(".loading-bar").css("width",t*50/15000*100+"%");
+        if(t*50>= 18000){
+            clearInterval(timer)
+        }
+    },50)
+
+    
 }
 
 
