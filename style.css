@@ -1,0 +1,114 @@
+html,body{
+    width: 100%;height: 100%;
+}
+body{
+    margin: 0;padding: 0;
+    background: #eef;
+}
+h1,h2,h3,h4,h5,h6{margin: 0;padding: 0}
+header{
+    width: 100%;
+    height:45px;
+    background-color: #fff;
+    line-height: 45px;
+    font-size: 24px;
+    color: #fff;
+    background: linear-gradient(to right, #A770EF , #CF8BF3,#FDB99B); /* 标准的语法 */
+    box-shadow: 0px 2px 4px #bbf;
+}
+header .nav{
+    width: 500px;
+    margin: 0 auto;
+    position: relative;
+}
+.title-en{
+    font-size: 14px;
+    color: rgb(121, 0, 143);
+}
+header .nav .swear-btn{
+    width: 80px;
+    height: 30px;
+    background: #fff;
+    position: absolute;
+    right: 0;
+    top: 7.5px;
+    color: #A770EF;
+    font-size: 14px;
+    text-align: center;
+    line-height: 30px;
+    border-radius: 30px;
+    font-weight: 400;
+}
+.main{
+    width: 500px;
+    margin: 0 auto;
+}
+.item{
+    width: 100%;
+    background: #fff;
+    color: #333;
+    margin-top: 10px;
+    border-radius: 5px;
+    display: flex;
+    
+    flex-direction: column;
+    box-shadow: 0px 2px 4px #bbf;
+}
+.item .item-author{
+    width: 100%;
+    color: #aaa;
+    font-size: 12px;
+    padding: 10px 20px;
+}
+.item .item-content{
+    border-top: solid 1px #eef;
+    margin-top: 5px;
+    font-size: 12px;
+    padding: 20px;
+}
+.md-overlay{
+    background-color: rgba(0, 0, 0, 0.75)
+}
+.md-content{
+    width: 500px;
+    background-color: #eef;
+    display: flex;
+    flex-direction: column;
+    height: auto;
+}
+.md-content div{
+    padding: 20px;
+}
+.md-content h3{
+    font-size: 18px;
+    background-color: #fff;
+    color: #A770EF;
+    border-bottom: solid 1px rgb(175, 165, 189);
+}
+.md-content textarea{
+    width: 100%;
+    border: none;
+    outline: none;
+    resize: none;
+    overflow: hidden;
+    color: #333;
+    font-size: 16px;
+    font-family: "黑体";
+    border-radius: 5px;
+    border: solid 1px rgb(175, 165, 189);
+    /* overflow-y: scroll; */
+}
+.md-close{
+    width: 80px;
+    height: 30px;
+    background: #A770EF;
+    border-radius: 35px;
+    color: #fff;
+    float: right;
+    border: none;
+}
+
+.max-length-tip{
+    color: #666;
+    font-size: 14px;
+}
