@@ -1,6 +1,7 @@
 var oathContract;
 var userAccount;
 var page = 1;
+var total=0;
 
 
 
@@ -8,6 +9,7 @@ $(".md-close").click(function () {
     var ac = $("#articleContent").val();
     console.log(ac)
     if (ac) {
+        ac = ac.replace(/,/g,"&comm")
         writeArticle(ac)
         $("#articleContent").val("");
     }
@@ -16,18 +18,20 @@ $(".md-close").click(function () {
 
 $(".next-page").click(function(){
     page++;
+    page = page > total/5 ? Math.floor(total/5) : page;
     showArticles(page)
 })
 $(".last-page").click(function(){
     page--;
+    page = page < 1 ? 1 : page;
     showArticles(page)
 })
 
 function startApp() {
-    var contractAddress = "0x99D28A468bA3fB210358Fa1D1e7AB8293dD65508";
+    var contractAddress = "0xB9283725D14f8888A695F299CD67b767bCFE1EB5";
     oathContract = web3.eth.contract(ABI).at(contractAddress);
 
-    console.log('oathContract', oathContract)
+    // console.log('oathContract', oathContract)
     userAccount = web3.eth.accounts[0];
     var accountInterval = setInterval(function () {
         // Check if account has changed
@@ -44,29 +48,32 @@ function startApp() {
 
 /*根据数据返回页面html结构*/
 function articleFactory(article){
-    console.log(article)
+
     let item = `<div class="item">
                     <div class="item-author">
                     <img src="${article.imgurl}" class="avatar"/>
                     author：<span>${article.author}</span>
                     </div>
                     <div class="item-content">
-                    ${article.content}
+                    ${article.content.replace('/&comm/g',"，")}
                     </div>
                 </div>`
     return item;
 }
 //字符串转对象数组
 function string2objarr(str){
-    console.log(str)
+
     let arr = str.split(",");
     let articles = [];
+
+    console.log(arr)
  
     for(let i = 0;i < arr.length;){
        
         let art = {};
         art.author = arr[i];
         art.content = arr[i+1];
+        console.log('art.author:',art.author)
         var imgData = new Identicon(art.author, 30).toString();
         art.imgurl = 'data:image/png;base64,' + imgData;
         articles.push(art);
@@ -78,18 +85,19 @@ function string2objarr(str){
 
 /**显示文章 */
 function showArticles(page) {
+    console.log('page:',page);
     oathContract.showSomeArticles(page,function (err, result) {
         if (err) {
             console.log('数据请求错误...', err)
         } else {
             if(result){
+                // console.log('获取到数据：',result)
                 let articles = string2objarr(result.toString());
-                console.log('---->',articles)
                 let articlesHtml = [];
                 for(let i = 0;i<articles.length;i++){
                     articlesHtml.push(articleFactory(articles[i]))
                 }
-                console.log(articlesHtml)
+                // console.log(articlesHtml)
 
                 //把最后的结果显示在页面
                 $(".main").html(articlesHtml.join(""))
@@ -112,7 +120,7 @@ function writeArticle(content) {
             var events = oathContract.allEvents();
             events.watch(function (error, result) {
                 if (!err)
-                    console.log(result)
+                    // console.log(result)
                 showArticles(1)
                 $(".loading-bar").css("width","0%")
             });
@@ -122,15 +130,30 @@ function writeArticle(content) {
     })
 }
 
+/*获取文章数量*/
+function getArticleLength(){
+    oathContract.getArticleLength(function (err, result) {
+        if(err){
+            console.log('数据请求错误...', err)
+        }else{
+            console.log(result.toString());
+            total = result.toString();
+        }
+    })
+}
+
+let timer; 
 function loading(){
     console.log('loading...')
+    $(".loading-bar").css("width","0%");
+    clearInterval(timer)
     let t = 0;
     let w = 0;
-    let timer = setInterval(function(){
+    timer = setInterval(function(){
         t++;
 
-        $(".loading-bar").css("width",t*50/15000*100+"%");
-        if(t*50>= 18000){
+        $(".loading-bar").css("width",t*50/20000*100+"%");
+        if(t*50>= 20000){
             clearInterval(timer)
         }
     },50)
@@ -153,10 +176,10 @@ window.addEventListener('load', function () {
         alert("请先安装Metamask插件")
     }
 
-    console.log(web3.eth.accounts)
+    // console.log(web3.eth.accounts)
     // 现在你可以启动你的应用并自由访问 Web3.js:
     startApp()
-
+    getArticleLength();
 })
 
 

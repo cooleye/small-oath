@@ -1,5 +1,6 @@
 html,body{
     width: 100%;height: 100%;
+    overflow-x: hidden;
 }
 body{
     margin: 0;padding: 0;
@@ -18,12 +19,14 @@ header{
     box-shadow: 0px 2px 4px #bbf;
     position: fixed;
     top: 0;
+    text-shadow: rgb(186, 150, 233) 0px 2px 5px;
 }
 header .nav{
-    width: 500px;
+    width: 600px;
     margin: 0 auto;
     position: relative;
 }
+
 .title-en{
     font-size: 14px;
     color: rgb(255, 255, 255);
@@ -43,8 +46,22 @@ header .nav .swear-btn{
     font-weight: 400;
 }
 .main{
-    width: 500px;
-    margin: 50px auto 0px;
+    width: 600px;
+    margin: 60px auto 0px;
+}
+@media screen and (max-width: 375px) {
+
+    .main {
+        width: 100%;
+    }
+
+    header .nav{
+        width: 100%;
+    }
+
+    .md-content{
+        width: 100% !important;
+    }
 }
 .item{
     width: 100%;
@@ -53,9 +70,12 @@ header .nav .swear-btn{
     margin-top: 10px;
     border-radius: 5px;
     display: flex;
-    
     flex-direction: column;
-    box-shadow: 0px 2px 4px #bbf;
+    transition: all ease 0.25s; 
+}
+.item:hover{
+    box-shadow: 0px 0px 8px rgb(177, 177, 245);
+    transform: scale(1.02);
 }
 .item .item-author{
     width: 100%;
@@ -65,8 +85,7 @@ header .nav .swear-btn{
 }
 .item .item-content{
     border-top: solid 1px #eef;
-    margin-top: 5px;
-    font-size: 12px;
+    font-size: 16px;
     padding: 20px;
 }
 .md-overlay{
@@ -98,6 +117,7 @@ header .nav .swear-btn{
     font-size: 16px;
     font-family: "黑体";
     border-radius: 5px;
+    padding: 10px;
     border: solid 1px rgb(175, 165, 189);
     /* overflow-y: scroll; */
 }
@@ -125,14 +145,16 @@ header .nav .swear-btn{
 
 .avatar{
     width: 30px;height: 30px;
-    border: solid 2px #cce;
+    border: solid 2px #ccc;
     border-radius: 30px;
+    vertical-align: middle;
+    margin-right: 5px;
 }
 
 .user-avatar{
     position: absolute;
     top: 5px;
-    right: 20px;
+    right: 100px;
 }
 
 .loading-bar{
