@@ -50,7 +50,7 @@ function startApp() {
         }
     }, 100);
 
-    showArticles(page)
+    showArticles(page);
 
     //在header上显示用户头像
     var imgData = new Identicon(userAccount, 30).toString();
@@ -118,7 +118,6 @@ function showArticles(page) {
 
     //更新总页数
     getArticleLength();
-
 }
 
 /*写入文章*/

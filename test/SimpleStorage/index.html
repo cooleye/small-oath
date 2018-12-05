@@ -4,34 +4,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    
     <script language="javascript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <!-- <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.0.0-beta.36/dist/web3.min.js" integrity="sha256-nWBTbvxhJgjslRyuAKJHK+XcZPlCnmIAAMixz6EefVk=" crossorigin="anonymous"></script> -->
-    <script src="./bower_components/web3/dist/web3.js"></script>
     <script src="./abi.js"></script>
+    <script src="./web3.min.js"></script>
+
 </head>
 
 
 <h1 id="showres">显示数据</h1>
-
-<!-- <input type="text" class="set-data" maxlength="9" 
- onkeyup="(this.v=function(){this.value=this.value.replace(/[^0-9-]+/,'');}).call(this)" onblur="this.v();"
- onafterpaste="this.value=this.value.replace(/\D/g,'')">  -->
+<body>
  <input type="text" class="set-data" maxlength="9" 
  onkeyup="this.value=this.value.replace(/\D/g,'')"
  onafterpaste="this.value=this.value.replace(/\D/g,'')"> 
  <button id="savedata">保存数据</button>
  <h3 id="txStatus"></h3>
 
-
-<body>
-    
-
     <script>
-
       var demoContract;
       var userAccount;
-
-
 
       $("#savedata").click(function(){
           var num = $(".set-data").val();
@@ -68,6 +59,7 @@
 
             }else{
                 $("#showres").html(result.toString())
+                $("#txStatus").text("");
             }
         })
        
@@ -91,10 +83,7 @@
            
         })
       }
-      
-
-
-        
+              
         window.addEventListener('load', function() {
 
         // 检查web3是否已经注入到(Mist/MetaMask)
