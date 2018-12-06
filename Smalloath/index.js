@@ -108,7 +108,8 @@ function showArticles(page) {
                     articlesHtml.push(articleFactory(articles[i]))
                 }
                 // console.log(articlesHtml)
-
+                
+                $(".loading-bar").css("width","0%")
                 //把最后的结果显示在页面
                 $(".main").html(articlesHtml.join(""))
             }
@@ -134,7 +135,7 @@ function writeArticle(content) {
                 if (!err)
                     // console.log(result)
                 showArticles(1)
-                $(".loading-bar").css("width","0%")
+                
             });
             loading();
         }
